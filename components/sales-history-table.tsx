@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import type { Sale } from "@/app/actions"
-import { cancelSale } from "@/app/actions"
+import type { Sale } from "@/app/actions";
+import { cancelSale } from "@/app/actions";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,52 +11,57 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Eye, Search, XCircle } from "lucide-react"
-import { useState } from "react"
-
+} from "@/components/ui/alert-dialog";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Eye, Search, XCircle } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
 
 interface SalesHistoryTableProps {
-  sales: Sale[]
+  sales: Sale[];
 }
 
 export function SalesHistoryTable({ sales }: SalesHistoryTableProps) {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [selectedSale, setSelectedSale] = useState<Sale | null>(null)
-  const [cancelingSale, setCancelingSale] = useState<Sale | null>(null)
-
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedSale, setSelectedSale] = useState<Sale | null>(null);
+  const [cancelingSale, setCancelingSale] = useState<Sale | null>(null);
 
   const filteredSales = sales.filter(
     (sale) =>
       sale.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      sale.paymentMethod.toLowerCase().includes(searchTerm.toLowerCase()),
-  )
+      sale.paymentMethod.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const handleCancelSale = async () => {
-    if (!cancelingSale) return
+    if (!cancelingSale) return;
 
-    const result = await cancelSale(cancelingSale.id)
+    const result = await cancelSale(cancelingSale.id);
     if (result.success) {
-      toast({
-        title: "Sale canceled",
-        description: "Product stock has been restored",
-      })
-      setCancelingSale(null)
-      window.location.reload()
+      toast.success("Sale canceled, poduct stock has been restored");
+      setCancelingSale(null);
+      window.location.reload();
     } else {
-      toast({
-        title: "Error",
-        description: result.error || "Failed to cancel sale",
-        variant: "destructive",
-      })
+      toast.error(result.error || "Failed to cancel sale");
     }
-  }
+  };
 
   const formatDate = (date: Date) => {
     return new Date(date).toLocaleDateString("en-US", {
@@ -65,12 +70,12 @@ export function SalesHistoryTable({ sales }: SalesHistoryTableProps) {
       year: "numeric",
       hour: "2-digit",
       minute: "2-digit",
-    })
-  }
+    });
+  };
 
   return (
     <>
-      <Card>
+      <Card className="overflow-hidden">
         <CardContent className="p-6">
           <div className="mb-6">
             <div className="relative">
@@ -99,28 +104,53 @@ export function SalesHistoryTable({ sales }: SalesHistoryTableProps) {
               <TableBody>
                 {filteredSales.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={6} className="text-center text-muted-foreground py-8">
+                    <TableCell
+                      colSpan={6}
+                      className="text-center text-muted-foreground py-8"
+                    >
                       No sales found
                     </TableCell>
                   </TableRow>
                 ) : (
                   filteredSales.map((sale) => (
                     <TableRow key={sale.id}>
-                      <TableCell className="font-mono text-sm">#{sale.id}</TableCell>
+                      <TableCell className="font-mono text-sm">
+                        #{sale.id}
+                      </TableCell>
                       <TableCell>{formatDate(sale.createdAt)}</TableCell>
-                      <TableCell className="font-semibold">${sale.total.toFixed(2)}</TableCell>
-                      <TableCell className="capitalize">{sale.paymentMethod.replace("_", " ")}</TableCell>
+                      <TableCell className="font-semibold">
+                        ${sale.total.toFixed(2)}
+                      </TableCell>
+                      <TableCell className="capitalize">
+                        {sale.paymentMethod.replace("_", " ")}
+                      </TableCell>
                       <TableCell>
-                        <Badge variant={sale.status === "completed" ? "default" : "secondary"}>{sale.status}</Badge>
+                        <Badge
+                          variant={
+                            sale.status === "completed"
+                              ? "default"
+                              : "secondary"
+                          }
+                        >
+                          {sale.status}
+                        </Badge>
                       </TableCell>
                       <TableCell className="text-right">
                         <div className="flex justify-end gap-2">
-                          <Button size="sm" variant="outline" onClick={() => setSelectedSale(sale)}>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => setSelectedSale(sale)}
+                          >
                             <Eye className="h-4 w-4 mr-1" />
                             View
                           </Button>
                           {sale.status === "completed" && (
-                            <Button size="sm" variant="destructive" onClick={() => setCancelingSale(sale)}>
+                            <Button
+                              size="sm"
+                              variant="destructive"
+                              onClick={() => setCancelingSale(sale)}
+                            >
                               <XCircle className="h-4 w-4 mr-1" />
                               Cancel
                             </Button>
@@ -147,21 +177,33 @@ export function SalesHistoryTable({ sales }: SalesHistoryTableProps) {
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-muted-foreground mb-1">Date</p>
-                  <p className="font-medium">{formatDate(selectedSale.createdAt)}</p>
+                  <p className="font-medium">
+                    {formatDate(selectedSale.createdAt)}
+                  </p>
                 </div>
                 <div>
                   <p className="text-muted-foreground mb-1">Payment Method</p>
-                  <p className="font-medium capitalize">{selectedSale.paymentMethod.replace("_", " ")}</p>
+                  <p className="font-medium capitalize">
+                    {selectedSale.paymentMethod.replace("_", " ")}
+                  </p>
                 </div>
                 <div>
                   <p className="text-muted-foreground mb-1">Status</p>
-                  <Badge variant={selectedSale.status === "completed" ? "default" : "secondary"}>
+                  <Badge
+                    variant={
+                      selectedSale.status === "completed"
+                        ? "default"
+                        : "secondary"
+                    }
+                  >
                     {selectedSale.status}
                   </Badge>
                 </div>
                 <div>
                   <p className="text-muted-foreground mb-1">Total Amount</p>
-                  <p className="font-bold text-lg">${selectedSale.total.toFixed(2)}</p>
+                  <p className="font-bold text-lg">
+                    ${selectedSale.total.toFixed(2)}
+                  </p>
                 </div>
               </div>
 
@@ -169,14 +211,19 @@ export function SalesHistoryTable({ sales }: SalesHistoryTableProps) {
                 <h3 className="font-semibold mb-3">Items</h3>
                 <div className="space-y-2">
                   {selectedSale.items.map((item, index) => (
-                    <div key={index} className="flex justify-between items-center p-3 bg-muted rounded-lg">
+                    <div
+                      key={index}
+                      className="flex justify-between items-center p-3 bg-muted rounded-lg"
+                    >
                       <div>
                         <p className="font-medium">{item.productName}</p>
                         <p className="text-sm text-muted-foreground">
                           {item.quantity} x ${item.price.toFixed(2)}
                         </p>
                       </div>
-                      <p className="font-semibold">${(item.quantity * item.price).toFixed(2)}</p>
+                      <p className="font-semibold">
+                        ${(item.quantity * item.price).toFixed(2)}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -184,7 +231,9 @@ export function SalesHistoryTable({ sales }: SalesHistoryTableProps) {
 
               {selectedSale.canceledAt && (
                 <div className="bg-destructive/10 p-3 rounded-lg">
-                  <p className="text-sm text-destructive">Canceled on {formatDate(selectedSale.canceledAt)}</p>
+                  <p className="text-sm text-destructive">
+                    Canceled on {formatDate(selectedSale.canceledAt)}
+                  </p>
                 </div>
               )}
             </div>
@@ -192,23 +241,29 @@ export function SalesHistoryTable({ sales }: SalesHistoryTableProps) {
         </DialogContent>
       </Dialog>
 
-      <AlertDialog open={!!cancelingSale} onOpenChange={() => setCancelingSale(null)}>
+      <AlertDialog
+        open={!!cancelingSale}
+        onOpenChange={() => setCancelingSale(null)}
+      >
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Cancel Sale</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to cancel this sale? This will restore the product stock and create a cancelation
-              transaction.
+              Are you sure you want to cancel this sale? This will restore the
+              product stock and create a cancelation transaction.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>No, keep it</AlertDialogCancel>
-            <AlertDialogAction onClick={handleCancelSale} className="bg-destructive hover:bg-destructive/90">
+            <AlertDialogAction
+              onClick={handleCancelSale}
+              className="bg-destructive hover:bg-destructive/90"
+            >
               Yes, cancel sale
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
     </>
-  )
+  );
 }

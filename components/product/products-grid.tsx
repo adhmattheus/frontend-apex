@@ -19,7 +19,7 @@ interface ProductsGridProps {
   initialProducts: Product[];
 }
 
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 8;
 
 export function ProductsGrid({ initialProducts }: ProductsGridProps) {
   const [products] = useState<Product[]>(initialProducts);
@@ -57,8 +57,7 @@ export function ProductsGrid({ initialProducts }: ProductsGridProps) {
   }, [searchQuery, statusFilter]);
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
+    <div className="grid gap-4">
       <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
         <div>
           <h2 className="text-2xl font-semibold">Product Catalog</h2>
@@ -70,7 +69,7 @@ export function ProductsGrid({ initialProducts }: ProductsGridProps) {
         </div>
         <Button
           onClick={() => setIsDialogOpen(true)}
-          className="gap-2 from-primary hover:bg-purple-600/90 shadow-lg shadow-primary/25"
+          className="gap-2 from-primary hover:bg-purple-600/90 shadow-sm shadow-primary/25"
         >
           <Plus className="h-4 w-4" />
           Add Product
@@ -109,7 +108,7 @@ export function ProductsGrid({ initialProducts }: ProductsGridProps) {
           <p className="text-muted-foreground">No products found</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {currentProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

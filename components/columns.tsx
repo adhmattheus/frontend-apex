@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import type { ColumnDef } from "@tanstack/react-table"
-import type { Product } from "@/app/actions"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import type { Product } from "@/app/actions";
+import { deleteProduct } from "@/app/actions";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,12 +11,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { MoreHorizontal, Pencil, Trash2, ArrowUpDown } from "lucide-react"
-import { deleteProduct } from "@/app/actions"
-import { toast } from "@/hooks/use-toast"
-import { useState } from "react"
-import { ProductDialog } from "@/components/product-dialog"
+} from "@/components/ui/dropdown-menu";
+import type { ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDown, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+
+import { ProductDialog } from "@/components/product/product-dialog";
+import { useState } from "react";
+import { toast } from "sonner";
 
 export const columns: ColumnDef<Product>[] = [
   {
@@ -31,21 +32,27 @@ export const columns: ColumnDef<Product>[] = [
           Product Name
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
-    cell: ({ row }) => <div className="font-medium">{row.getValue("name")}</div>,
+    cell: ({ row }) => (
+      <div className="font-medium">{row.getValue("name")}</div>
+    ),
   },
   {
     accessorKey: "description",
     header: "Description",
     cell: ({ row }) => (
-      <div className="max-w-[300px] truncate text-muted-foreground">{row.getValue("description")}</div>
+      <div className="max-w-[300px] truncate text-muted-foreground">
+        {row.getValue("description")}
+      </div>
     ),
   },
   {
     accessorKey: "category",
     header: "Category",
-    cell: ({ row }) => <div className="text-sm">{row.getValue("category")}</div>,
+    cell: ({ row }) => (
+      <div className="text-sm">{row.getValue("category")}</div>
+    ),
   },
   {
     accessorKey: "price",
@@ -59,15 +66,15 @@ export const columns: ColumnDef<Product>[] = [
           Price
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
     cell: ({ row }) => {
-      const price = Number.parseFloat(row.getValue("price"))
+      const price = Number.parseFloat(row.getValue("price"));
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
-      }).format(price)
-      return <div className="font-medium">{formatted}</div>
+      }).format(price);
+      return <div className="font-medium">{formatted}</div>;
     },
   },
   {
@@ -82,18 +89,22 @@ export const columns: ColumnDef<Product>[] = [
           Stock
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
     cell: ({ row }) => {
-      const stock = row.getValue("stock") as number
-      return <div className={stock === 0 ? "text-destructive font-medium" : ""}>{stock}</div>
+      const stock = row.getValue("stock") as number;
+      return (
+        <div className={stock === 0 ? "text-destructive font-medium" : ""}>
+          {stock}
+        </div>
+      );
     },
   },
   {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
-      const status = row.getValue("status") as string
+      const status = row.getValue("status") as string;
       return (
         <Badge
           variant={status === "active" ? "default" : "secondary"}
@@ -105,39 +116,29 @@ export const columns: ColumnDef<Product>[] = [
         >
           {status}
         </Badge>
-      )
+      );
     },
   },
   {
     id: "actions",
     cell: function Cell({ row }) {
-      const product = row.original
-      const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
+      const product = row.original;
+      const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
       const handleDelete = async () => {
         try {
-          const result = await deleteProduct(product.id)
+          const result = await deleteProduct(product.id);
           if (result.success) {
-            toast({
-              title: "Product deleted",
-              description: "The product has been successfully deleted.",
-            })
-            window.location.reload()
+            toast.success("The product has been successfully deleted.");
+
+            window.location.reload();
           } else {
-            toast({
-              title: "Error",
-              description: result.error || "Failed to delete product",
-              variant: "destructive",
-            })
+            toast.error(result.error || "Failed to delete product");
           }
         } catch (error) {
-          toast({
-            title: "Error",
-            description: "An unexpected error occurred",
-            variant: "destructive",
-          })
+          toast.error("An unexpected error occurred");
         }
-      }
+      };
 
       return (
         <>
@@ -155,7 +156,10 @@ export const columns: ColumnDef<Product>[] = [
                 <Pencil className="mr-2 h-4 w-4" />
                 Edit
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleDelete} className="text-destructive focus:text-destructive">
+              <DropdownMenuItem
+                onClick={handleDelete}
+                className="text-destructive focus:text-destructive"
+              >
                 <Trash2 className="mr-2 h-4 w-4" />
                 Delete
               </DropdownMenuItem>
@@ -167,11 +171,11 @@ export const columns: ColumnDef<Product>[] = [
             onOpenChange={setIsEditDialogOpen}
             product={product}
             onSuccess={() => {
-              window.location.reload()
+              window.location.reload();
             }}
           />
         </>
-      )
+      );
     },
   },
-]
+];

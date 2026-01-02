@@ -309,7 +309,10 @@ export function ShoppingCart({
             </Badge>
           </div>
           <div className="flex items-baseline justify-between">
-            <span className="text-3xl font-bold bg-linear-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+            <span
+              className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-600
+                 hover:from-primary/90 hover:to-purple-600/90 transition-all"
+            >
               ${cartTotal.toFixed(2)}
             </span>
           </div>

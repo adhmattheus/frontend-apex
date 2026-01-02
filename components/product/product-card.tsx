@@ -52,7 +52,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
   return (
     <>
-      <Card className="overflow-hidden group hover:shadow-lg transition-shadow">
+      <Card className="overflow-hidden group hover:shadow-lg transition-shadow p-0 gap-4 justify-between">
         <div className="aspect-square relative overflow-hidden bg-muted">
           <Image
             src={product.imageUrl || "/placeholder.svg"}
@@ -73,7 +73,7 @@ export function ProductCard({ product }: ProductCardProps) {
           </div>
         </div>
 
-        <CardContent className="p-3 space-y-2">
+        <CardContent>
           <div className="flex items-start justify-between gap-2">
             <h3 className="font-semibold text-base leading-tight line-clamp-1">
               {product.name}
@@ -119,10 +119,8 @@ export function ProductCard({ product }: ProductCardProps) {
           </div>
         </CardContent>
 
-        <CardFooter className="p-3 pt-0">
-          <div className="text-xl font-bold text-primary">
-            ${product.price.toFixed(2)}
-          </div>
+        <CardFooter className="text-2xl font-bold text-primary pb-6">
+          ${product.price.toFixed(2)}
         </CardFooter>
       </Card>
 

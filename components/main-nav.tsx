@@ -60,7 +60,7 @@ export function MainNav() {
   ];
 
   return (
-    <header className="flex h-16 items-center sticky top-0 z-50 w-full border-b border-border/40 bg-background backdrop-blur supports-backdrop-filter:bg-background/80 justify-between px-4 ">
+    <header className="flex h-16 items-center sticky top-0 z-50 w-full border-b border-primary/15 bg-background backdrop-blur supports-backdrop-filter:bg-background/80 justify-between px-4 ">
       <div className="hidden md:flex">
         <Link href="/" className="flex items-center group gap-2">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-linear-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 shadow-lg shadow-primary/20 transition-all group-hover:shadow-xl group-hover:shadow-primary/30">
