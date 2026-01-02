@@ -1,21 +1,25 @@
-"use client"
+"use client";
 
-import type { Product } from "@/app/actions"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
-import { Check, Package, Plus } from "lucide-react"
-import Image from "next/image"
+import type { Product } from "@/app/actions";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Check, Package, Plus } from "lucide-react";
+import Image from "next/image";
 
 interface ProductSalesCardProps {
-  product: Product
-  onAddToCart: (product: Product) => void
-  cartQuantity: number
+  product: Product;
+  onAddToCart: (product: Product) => void;
+  cartQuantity: number;
 }
 
-export function ProductSalesCard({ product, onAddToCart, cartQuantity }: ProductSalesCardProps) {
-  const isOutOfStock = product.stock === 0
-  const isMaxedOut = cartQuantity >= product.stock
+export function ProductSalesCard({
+  product,
+  onAddToCart,
+  cartQuantity,
+}: ProductSalesCardProps) {
+  const isOutOfStock = product.stock === 0;
+  const isMaxedOut = cartQuantity >= product.stock;
 
   return (
     <Card className="overflow-hidden group hover:shadow-lg transition-shadow">
@@ -37,8 +41,12 @@ export function ProductSalesCard({ product, onAddToCart, cartQuantity }: Product
       </div>
 
       <CardContent className="p-4 space-y-2">
-        <h3 className="font-semibold text-lg leading-tight line-clamp-1">{product.name}</h3>
-        <p className="text-sm text-muted-foreground line-clamp-2">{product.description}</p>
+        <h3 className="font-semibold text-lg leading-tight line-clamp-1">
+          {product.name}
+        </h3>
+        <p className="text-sm text-muted-foreground line-clamp-2">
+          {product.description}
+        </p>
 
         <div className="flex items-center gap-2 text-sm">
           <Badge variant="outline">{product.category}</Badge>
@@ -61,5 +69,5 @@ export function ProductSalesCard({ product, onAddToCart, cartQuantity }: Product
         </Button>
       </CardFooter>
     </Card>
-  )
+  );
 }

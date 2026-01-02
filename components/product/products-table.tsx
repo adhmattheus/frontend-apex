@@ -1,20 +1,20 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import type { Product } from "@/app/actions"
-import { DataTable } from "@/components/data-table"
-import { columns } from "@/components/columns"
-import { ProductDialog } from "@/components/product-dialog"
-import { Button } from "@/components/ui/button"
-import { Plus } from "lucide-react"
+import type { Product } from "@/app/actions";
+import { columns } from "@/components/columns";
+import { DataTable } from "@/components/data-table";
+import { ProductDialog } from "@/components/product/product-dialog";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import { useState } from "react";
 
 interface ProductsTableProps {
-  initialProducts: Product[]
+  initialProducts: Product[];
 }
 
 export function ProductsTable({ initialProducts }: ProductsTableProps) {
-  const [products, setProducts] = useState<Product[]>(initialProducts)
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [products, setProducts] = useState<Product[]>(initialProducts);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (
     <div className="space-y-4">
@@ -22,7 +22,8 @@ export function ProductsTable({ initialProducts }: ProductsTableProps) {
         <div>
           <h2 className="text-2xl font-semibold">Product Catalog</h2>
           <p className="text-sm text-muted-foreground mt-1">
-            {products.length} {products.length === 1 ? "product" : "products"} total
+            {products.length} {products.length === 1 ? "product" : "products"}{" "}
+            total
           </p>
         </div>
         <Button onClick={() => setIsDialogOpen(true)} className="gap-2">
@@ -38,9 +39,9 @@ export function ProductsTable({ initialProducts }: ProductsTableProps) {
         onOpenChange={setIsDialogOpen}
         onSuccess={() => {
           // Refresh will happen via revalidatePath
-          window.location.reload()
+          window.location.reload();
         }}
       />
     </div>
-  )
+  );
 }

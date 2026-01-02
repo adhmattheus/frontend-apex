@@ -2,7 +2,7 @@
 
 import type { Product } from "@/app/actions";
 import { deleteProduct } from "@/app/actions";
-import { ProductDialog } from "@/components/product-dialog";
+import { ProductDialog } from "@/components/product/product-dialog";
 import {
   AlertDialog,
   AlertDialogAction,

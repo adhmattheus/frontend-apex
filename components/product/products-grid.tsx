@@ -1,8 +1,8 @@
 "use client";
 
 import type { Product } from "@/app/actions";
-import { ProductCard } from "@/components/product-card";
-import { ProductDialog } from "@/components/product-dialog";
+import { ProductCard } from "@/components/product/product-card";
+import { ProductDialog } from "@/components/product/product-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -70,7 +70,7 @@ export function ProductsGrid({ initialProducts }: ProductsGridProps) {
         </div>
         <Button
           onClick={() => setIsDialogOpen(true)}
-          className="bg-linear-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 shadow-lg shadow-primary/25"
+          className="gap-2 from-primary hover:bg-purple-600/90 shadow-lg shadow-primary/25"
         >
           <Plus className="h-4 w-4" />
           Add Product

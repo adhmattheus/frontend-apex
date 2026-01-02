@@ -1,14 +1,14 @@
 "use client"
 
-import { useState, useMemo } from "react"
 import type { Product } from "@/app/actions"
-import { ProductSalesCard } from "@/components/product-sales-card"
+import { ProductSalesCard } from "@/components/product/product-sales-card"
 import { ShoppingCart } from "@/components/shopping-cart"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Badge } from "@/components/ui/badge"
-import { Search, CarIcon as CartIcon } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { CarIcon as CartIcon, Search } from "lucide-react"
+import { useMemo, useState } from "react"
 
 export type CartItem = {
   product: Product
