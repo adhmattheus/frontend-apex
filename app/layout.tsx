@@ -12,7 +12,7 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Apex Management",
+  title: "Apex Management System",
   description:
     "Manage your product catalog and sales channels with ease using Apex Management.",
   generator: "Masftech Apex Management",
