@@ -1,83 +1,92 @@
-"use client"
+"use client";
 
-import type { Product } from "@/app/actions"
-import { ProductSalesCard } from "@/components/product/product-sales-card"
-import { ShoppingCart } from "@/components/shopping-cart"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { CarIcon as CartIcon, Search } from "lucide-react"
-import { useMemo, useState } from "react"
+import type { Product } from "@/app/actions";
+import { ProductSalesCard } from "@/components/product/product-sales-card";
+import { ShoppingCart } from "@/components/shopping-cart";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { CarIcon as CartIcon, Search } from "lucide-react";
+import { useMemo, useState } from "react";
 
 export type CartItem = {
-  product: Product
-  quantity: number
-}
+  product: Product;
+  quantity: number;
+};
 
 interface SalesContentProps {
-  products: Product[]
+  products: Product[];
 }
 
 export function SalesContent({ products }: SalesContentProps) {
-  const [cart, setCart] = useState<CartItem[]>([])
-  const [searchQuery, setSearchQuery] = useState("")
-  const [isCartOpen, setIsCartOpen] = useState(false)
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const activeProducts = useMemo(() => {
-    return products.filter((p) => p.status === "active" && p.stock > 0)
-  }, [products])
+    return products.filter((p) => p.status === "active" && p.stock > 0);
+  }, [products]);
 
   const filteredProducts = useMemo(() => {
-    if (!searchQuery) return activeProducts
+    if (!searchQuery) return activeProducts;
     return activeProducts.filter(
       (product) =>
         product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         product.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.category.toLowerCase().includes(searchQuery.toLowerCase()),
-    )
-  }, [activeProducts, searchQuery])
+        product.category.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [activeProducts, searchQuery]);
 
   const addToCart = (product: Product) => {
     setCart((prev) => {
-      const existing = prev.find((item) => item.product.id === product.id)
+      const existing = prev.find((item) => item.product.id === product.id);
       if (existing) {
         if (existing.quantity >= product.stock) {
-          return prev
+          return prev;
         }
-        return prev.map((item) => (item.product.id === product.id ? { ...item, quantity: item.quantity + 1 } : item))
+        return prev.map((item) =>
+          item.product.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
       }
-      return [...prev, { product, quantity: 1 }]
-    })
-  }
+      return [...prev, { product, quantity: 1 }];
+    });
+  };
 
   const updateQuantity = (productId: string, quantity: number) => {
     if (quantity <= 0) {
-      removeFromCart(productId)
-      return
+      removeFromCart(productId);
+      return;
     }
     setCart((prev) =>
       prev.map((item) =>
-        item.product.id === productId ? { ...item, quantity: Math.min(quantity, item.product.stock) } : item,
-      ),
-    )
-  }
+        item.product.id === productId
+          ? { ...item, quantity: Math.min(quantity, item.product.stock) }
+          : item
+      )
+    );
+  };
 
   const removeFromCart = (productId: string) => {
-    setCart((prev) => prev.filter((item) => item.product.id !== productId))
-  }
+    setCart((prev) => prev.filter((item) => item.product.id !== productId));
+  };
 
   const clearCart = () => {
-    setCart([])
-  }
+    setCart([]);
+  };
 
   const cartTotal = useMemo(() => {
-    return cart.reduce((total, item) => total + item.product.price * item.quantity, 0)
-  }, [cart])
+    return cart.reduce(
+      (total, item) => total + item.product.price * item.quantity,
+      0
+    );
+  }, [cart]);
 
   const cartItemsCount = useMemo(() => {
-    return cart.reduce((total, item) => total + item.quantity, 0)
-  }, [cart])
+    return cart.reduce((total, item) => total + item.quantity, 0);
+  }, [cart]);
 
   return (
     <div className="space-y-6">
@@ -95,8 +104,11 @@ export function SalesContent({ products }: SalesContentProps) {
 
         <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
           <SheetTrigger asChild>
-            <Button size="lg" className="gap-2 relative w-full sm:w-auto">
-              <CartIcon className="h-5 w-5" />
+            <Button
+              size="lg"
+              className="gap-2 relative w-1/6 bg-linear-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700"
+            >
+              <CartIcon />
               Cart
               {cartItemsCount > 0 && (
                 <Badge variant="secondary" className="ml-1 px-2">
@@ -121,12 +133,16 @@ export function SalesContent({ products }: SalesContentProps) {
       {/* Products Grid */}
       {filteredProducts.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-muted-foreground">No products available for sale</p>
+          <p className="text-muted-foreground">
+            No products available for sale
+          </p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredProducts.map((product) => {
-            const cartItem = cart.find((item) => item.product.id === product.id)
+            const cartItem = cart.find(
+              (item) => item.product.id === product.id
+            );
             return (
               <ProductSalesCard
                 key={product.id}
@@ -134,10 +150,10 @@ export function SalesContent({ products }: SalesContentProps) {
                 onAddToCart={addToCart}
                 cartQuantity={cartItem?.quantity || 0}
               />
-            )
+            );
           })}
         </div>
       )}
     </div>
-  )
+  );
 }

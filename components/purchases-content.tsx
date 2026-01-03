@@ -74,25 +74,22 @@ export function PurchasesContent({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="bg-background p-4 gap-4 grid">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-violet-600 dark:from-blue-400 dark:to-violet-400 bg-clip-text text-transparent">
-            Purchase Orders
-          </h1>
-          <p className="text-muted-foreground mt-1">
+        <div className="grid gap-2">
+          <h1 className="text-4xl font-bold text-primary">Purchase Orders</h1>
+          <p className="text-muted-foreground text-pretty">
             Manage inventory purchases from suppliers
           </p>
         </div>
         <Button
           onClick={() => setIsCreateOpen(true)}
-          className="bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700"
+          className="bg-linear-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700"
         >
-          <Plus className="mr-2 h-4 w-4" />
+          <Plus />
           New Purchase Order
         </Button>
       </div>
-
       <Card className="p-4">
         <div className="flex flex-col md:flex-row gap-4">
           <div className="relative flex-1">
@@ -136,7 +133,6 @@ export function PurchasesContent({
           </div>
         </div>
       </Card>
-
       <Card>
         <Table>
           <TableHeader>
@@ -222,7 +218,6 @@ export function PurchasesContent({
           </TableBody>
         </Table>
       </Card>
-
       <PurchaseOrderDialog
         open={isCreateOpen}
         onOpenChange={setIsCreateOpen}

@@ -37,12 +37,7 @@ export default async function ProductsPage() {
     <div className="min-h-screen bg-background p-4 gap-4 grid">
       {/* Hero Section */}
       <div className="grid gap-2">
-        <h1
-          className="text-4xl font-bold tracking-tight text-transparent bg-clip-text bg-linear-to-r from-primary to-purple-600 
-               hover:from-primary/90 hover:to-purple-600/90 transition-all"
-        >
-          Dashboard
-        </h1>
+        <h1 className="text-4xl font-bold text-primary">Home</h1>
         <p className="text-muted-foreground text-pretty">
           Welcome to Apex Management System
         </p>

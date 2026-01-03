@@ -11,10 +11,7 @@ export default async function ProductsPage() {
     <div className="min-h-screen bg-background p-4 gap-4 grid">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div className="grid gap-2">
-          <h1
-            className="text-4xl font-bold tracking-tight text-transparent bg-clip-text bg-linear-to-r from-primary to-purple-600 
-               hover:from-primary/90 hover:to-purple-600/90 transition-all"
-          >
+          <h1 className="text-4xl font-bold text-primary">
             Products Management
           </h1>
 
@@ -23,7 +20,7 @@ export default async function ProductsPage() {
           </p>
         </div>
         <Link href="/sales">
-          <Button className="gap-2 from-primary hover:bg-purple-600/90 shadow-sm shadow-primary/25">
+          <Button className="bg-linear-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700">
             <ShoppingCart />
             Go to Sales
           </Button>

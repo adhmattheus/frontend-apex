@@ -1,23 +1,40 @@
-"use client"
+"use client";
 
-import type { Transaction } from "@/app/actions"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { DollarSign, TrendingUp, Calendar, ArrowUpCircle, ArrowDownCircle, Wallet } from "lucide-react"
+import type { Transaction } from "@/app/actions";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  ArrowDownCircle,
+  ArrowUpCircle,
+  Calendar,
+  DollarSign,
+  TrendingUp,
+  Wallet,
+} from "lucide-react";
 
 interface FinancialDashboardProps {
   summary: {
-    cashBalance: number
-    dailyTotal: number
-    monthlyTotal: number
-    totalSales: number
-    totalCancelations: number
-  }
-  transactions: Transaction[]
+    cashBalance: number;
+    dailyTotal: number;
+    monthlyTotal: number;
+    totalSales: number;
+    totalCancelations: number;
+  };
+  transactions: Transaction[];
 }
 
-export function FinancialDashboard({ summary, transactions }: FinancialDashboardProps) {
+export function FinancialDashboard({
+  summary,
+  transactions,
+}: FinancialDashboardProps) {
   const formatDate = (date: Date) => {
     return new Date(date).toLocaleDateString("en-US", {
       month: "short",
@@ -25,28 +42,32 @@ export function FinancialDashboard({ summary, transactions }: FinancialDashboard
       year: "numeric",
       hour: "2-digit",
       minute: "2-digit",
-    })
-  }
+    });
+  };
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
-    }).format(amount)
-  }
+    }).format(amount);
+  };
 
   return (
-    <div className="space-y-6">
+    <>
       <div className="grid gap-6 md:grid-cols-3">
         <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Cash Balance</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Cash Balance
+            </CardTitle>
             <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
               <Wallet className="h-5 w-5 text-primary" />
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold tracking-tight text-primary">{formatCurrency(summary.cashBalance)}</div>
+            <div className="text-3xl font-bold tracking-tight text-primary">
+              {formatCurrency(summary.cashBalance)}
+            </div>
             <p className="text-xs text-muted-foreground mt-2 flex items-center gap-2">
               <span className="inline-flex items-center gap-1">
                 <ArrowUpCircle className="h-3 w-3 text-success" />
@@ -63,13 +84,17 @@ export function FinancialDashboard({ summary, transactions }: FinancialDashboard
 
         <Card className="border-success/20 bg-gradient-to-br from-success/5 to-transparent">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Daily Sales</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Daily Sales
+            </CardTitle>
             <div className="h-10 w-10 rounded-lg bg-success/10 flex items-center justify-center">
               <TrendingUp className="h-5 w-5 text-success" />
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold tracking-tight text-success">{formatCurrency(summary.dailyTotal)}</div>
+            <div className="text-3xl font-bold tracking-tight text-success">
+              {formatCurrency(summary.dailyTotal)}
+            </div>
             <p className="text-xs text-muted-foreground mt-2">
               {new Date().toLocaleDateString("en-US", {
                 weekday: "long",
@@ -82,15 +107,22 @@ export function FinancialDashboard({ summary, transactions }: FinancialDashboard
 
         <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Monthly Sales</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Monthly Sales
+            </CardTitle>
             <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
               <Calendar className="h-5 w-5 text-primary" />
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold tracking-tight text-primary">{formatCurrency(summary.monthlyTotal)}</div>
+            <div className="text-3xl font-bold tracking-tight text-primary">
+              {formatCurrency(summary.monthlyTotal)}
+            </div>
             <p className="text-xs text-muted-foreground mt-2">
-              {new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}
+              {new Date().toLocaleDateString("en-US", {
+                month: "long",
+                year: "numeric",
+              })}
             </p>
           </CardContent>
         </Card>
@@ -101,7 +133,9 @@ export function FinancialDashboard({ summary, transactions }: FinancialDashboard
           <div className="flex items-center justify-between">
             <div>
               <CardTitle>Transaction History</CardTitle>
-              <p className="text-sm text-muted-foreground mt-1">All financial transactions and activities</p>
+              <p className="text-sm text-muted-foreground mt-1">
+                All financial transactions and activities
+              </p>
             </div>
             <Badge variant="secondary" className="font-mono">
               {transactions.length} total
@@ -122,11 +156,16 @@ export function FinancialDashboard({ summary, transactions }: FinancialDashboard
               <TableBody>
                 {transactions.length === 0 ? (
                   <TableRow className="hover:bg-transparent">
-                    <TableCell colSpan={4} className="text-center text-muted-foreground py-12">
+                    <TableCell
+                      colSpan={4}
+                      className="text-center text-muted-foreground py-12"
+                    >
                       <div className="flex flex-col items-center gap-2">
                         <DollarSign className="h-8 w-8 text-muted-foreground/50" />
                         <p>No transactions yet</p>
-                        <p className="text-xs">Complete a sale to see transactions here</p>
+                        <p className="text-xs">
+                          Complete a sale to see transactions here
+                        </p>
                       </div>
                     </TableCell>
                   </TableRow>
@@ -157,19 +196,25 @@ export function FinancialDashboard({ summary, transactions }: FinancialDashboard
                         </div>
                       </TableCell>
                       <TableCell>
-                        <code className="text-sm font-mono bg-muted px-2 py-1 rounded">#{transaction.saleId}</code>
+                        <code className="text-sm font-mono bg-muted px-2 py-1 rounded">
+                          #{transaction.saleId}
+                        </code>
                       </TableCell>
                       <TableCell>
                         <span
                           className={`font-semibold text-base ${
-                            transaction.type === "sale" ? "text-success" : "text-destructive"
+                            transaction.type === "sale"
+                              ? "text-success"
+                              : "text-destructive"
                           }`}
                         >
                           {transaction.type === "sale" ? "+" : "-"}
                           {formatCurrency(transaction.amount)}
                         </span>
                       </TableCell>
-                      <TableCell className="text-muted-foreground">{formatDate(transaction.createdAt)}</TableCell>
+                      <TableCell className="text-muted-foreground">
+                        {formatDate(transaction.createdAt)}
+                      </TableCell>
                     </TableRow>
                   ))
                 )}
@@ -178,6 +223,6 @@ export function FinancialDashboard({ summary, transactions }: FinancialDashboard
           </div>
         </CardContent>
       </Card>
-    </div>
-  )
+    </>
+  );
 }

@@ -69,9 +69,9 @@ export function ProductsGrid({ initialProducts }: ProductsGridProps) {
         </div>
         <Button
           onClick={() => setIsDialogOpen(true)}
-          className="gap-2 from-primary hover:bg-purple-600/90 shadow-sm shadow-primary/25"
+          className="bg-linear-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700"
         >
-          <Plus className="h-4 w-4" />
+          <Plus />
           Add Product
         </Button>
       </div>

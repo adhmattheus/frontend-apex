@@ -62,7 +62,7 @@ export function ProductSalesCard({
         <Button
           onClick={() => onAddToCart(product)}
           disabled={isOutOfStock || isMaxedOut}
-          className="gap-2 bg-linear-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-md hover:shadow-lg transition-all"
+          className="bg-linear-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700"
         >
           <Plus className="h-4 w-4" />
           Add

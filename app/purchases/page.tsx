@@ -13,8 +13,6 @@ export default async function PurchasesPage() {
   ]);
 
   return (
-    <div className="container mx-auto py-8 px-4">
-      <PurchasesContent purchaseOrders={purchaseOrders} suppliers={suppliers} />
-    </div>
+    <PurchasesContent purchaseOrders={purchaseOrders} suppliers={suppliers} />
   );
 }

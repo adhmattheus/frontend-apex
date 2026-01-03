@@ -9,9 +9,5 @@ export const metadata = {
 export default async function SuppliersPage() {
   const suppliers = await getSuppliers();
 
-  return (
-    <div className="container mx-auto py-8 px-4">
-      <SuppliersContent suppliers={suppliers} />
-    </div>
-  );
+  return <SuppliersContent suppliers={suppliers} />;
 }

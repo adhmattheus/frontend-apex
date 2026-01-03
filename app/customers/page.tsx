@@ -3,16 +3,12 @@ import { Suspense } from "react";
 
 export default function CustomersPage() {
   return (
-    <div className="flex-1 space-y-6 p-6 md:p-8 pt-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-            Customer Analytics
-          </h2>
-          <p className="text-muted-foreground mt-1">
-            Detailed sales analysis by customer
-          </p>
-        </div>
+    <div className="min-h-screen bg-background p-4 gap-4 grid">
+      <div className="grid gap-2">
+        <h1 className="text-4xl font-bold text-primary"> Customer Analytics</h1>
+        <p className="text-muted-foreground text-pretty">
+          Detailed sales analysis by customer
+        </p>
       </div>
 
       <Suspense fallback={<div>Loading...</div>}>

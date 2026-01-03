@@ -92,12 +92,10 @@ export function AnalyticsContent({ analytics }: AnalyticsContentProps) {
   ];
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-violet-600 dark:from-blue-400 dark:to-violet-400 bg-clip-text text-transparent">
-          Analytics Dashboard
-        </h1>
-        <p className="text-muted-foreground mt-1">
+    <div className="bg-background p-4 gap-4 grid">
+      <div className="grid gap-2">
+        <h1 className="text-4xl font-bold text-primary">Analytics Dashboard</h1>
+        <p className="text-muted-foreground text-pretty">
           Business insights and performance metrics
         </p>
       </div>

@@ -9,9 +9,5 @@ export const metadata = {
 export default async function ExpensesPage() {
   const expenses = await getExpenses();
 
-  return (
-    <div className="container mx-auto py-8 px-4">
-      <ExpensesContent expenses={expenses} />
-    </div>
-  );
+  return <ExpensesContent expenses={expenses} />;
 }
